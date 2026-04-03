@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\LaporanKonservasiController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return "API SIKOMA BERJALAN";
 });
 
 /*
@@ -57,4 +57,4 @@ Route::middleware('auth')->group(function () {
 | Auth Routes
 |--------------------------------------------------------------------------
 */
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';
