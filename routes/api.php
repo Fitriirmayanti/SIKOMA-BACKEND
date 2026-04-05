@@ -56,7 +56,7 @@ Route::get('/laporan', [LaporanKonservasiController::class, 'index']);
 Route::post('/laporan', [LaporanKonservasiController::class, 'store']);
 Route::put('/laporan/{id}', [LaporanKonservasiController::class, 'update']);
 Route::delete('/laporan/{id}', [LaporanKonservasiController::class, 'destroy']);
-
+Route::put('/laporan/{id}/validasi', [LaporanKonservasiController::class, 'validasi']);
 // =======================
 // ✅ TEST API (OPTIONAL)
 // =======================

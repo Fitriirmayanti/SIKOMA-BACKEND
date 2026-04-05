@@ -110,5 +110,24 @@ class LaporanKonservasiController extends Controller
             'message' => 'Laporan berhasil dihapus'
         ]);
     }
-    
+    // 🔥 VALIDASI LAPORAN (APPROVE / TOLAK)
+    public function validasi($id, Request $request)
+    {
+        $laporan = LaporanKonservasi::find($id);
+
+        if (!$laporan) {
+            return response()->json([
+                'message' => 'Laporan tidak ditemukan'
+            ], 404);
+        }
+
+        // status: 1 = disetujui, 2 = ditolak
+        $laporan->status = $request->status;
+        $laporan->save();
+
+        return response()->json([
+            'message' => 'Status laporan berhasil diupdate',
+            'data' => $laporan
+        ]);
+    }
 }
