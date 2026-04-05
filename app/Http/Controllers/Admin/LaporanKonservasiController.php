@@ -110,4 +110,5 @@ class LaporanKonservasiController extends Controller
             'message' => 'Laporan berhasil dihapus'
         ]);
     }
+    
 }

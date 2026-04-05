@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\EdukasiController;
 use App\Http\Controllers\Admin\LaporanKonservasiController;
+use App\Http\Controllers\Admin\DashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,6 +45,11 @@ Route::post('/register', function (Request $request) {
 // =======================
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::get('/edukasi', [EdukasiController::class, 'index']);
+
+// =======================
+// ✅ DASHBOARD
+// =======================
+Route::get('/admin/dashboard', [DashboardController::class, 'index']);
 
 // API laporan konservasi
 Route::get('/laporan', [LaporanKonservasiController::class, 'index']);
