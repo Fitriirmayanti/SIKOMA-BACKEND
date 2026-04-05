@@ -47,6 +47,8 @@ Route::get('/edukasi', [EdukasiController::class, 'index']);
 // API laporan konservasi
 Route::get('/laporan', [LaporanKonservasiController::class, 'index']);
 Route::post('/laporan', [LaporanKonservasiController::class, 'store']);
+Route::put('/laporan/{id}', [LaporanKonservasiController::class, 'update']);
+Route::delete('/laporan/{id}', [LaporanKonservasiController::class, 'destroy']);
 
 // =======================
 // ✅ TEST API (OPTIONAL)
