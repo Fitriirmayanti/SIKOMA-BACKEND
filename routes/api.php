@@ -6,8 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\EdukasiController;
-use App\Http\Controllers\Admin\LaporanKonservasiController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\AdminLapangan\LaporanKonservasiController;
+use App\Http\Controllers\AdminLapangan\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
