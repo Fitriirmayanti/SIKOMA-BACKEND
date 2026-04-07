@@ -33,7 +33,7 @@ Route::post('/register', function (Request $request) {
         'name' => $request->full_name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'role' => 'AdminLapangan_lapangan' // default role
+        'role' => 'admin_pusat' // default role
     ]);
 
     return response()->json([
