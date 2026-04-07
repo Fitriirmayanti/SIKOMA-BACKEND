@@ -9,14 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('galeris', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+    Schema::create('galeri', function (Blueprint $table) {
+        $table->id();
+        $table->string('judul');
+        $table->text('keterangan')->nullable();
+        $table->string('gambar');
+        $table->string('keygaleri')->nullable();
+        $table->timestamps();
+    });
     }
-
     /**
      * Reverse the migrations.
      */

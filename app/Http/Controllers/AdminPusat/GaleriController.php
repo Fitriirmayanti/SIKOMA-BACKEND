@@ -9,69 +9,65 @@ use Illuminate\Support\Str;
 
 class GaleriController extends Controller
 {
+    // 🔥 GET GALERI
+   public function index(Request $request)
+{
+    $galeri = Galeri::latest()->get();
 
-    public function index()
-    {
-        $galeri = Galeri::where('keygaleri', 'banner')->get();
-        return view('AdminLapangan_pusat.galeri', [
-            'title' => 'Galeri',
-            'active' => 'Banner',
-            'galeri' => $galeri,
-            'user' => auth()->user(),
-        ]);
-    }
+    return response()->json([
+        'message' => 'Data galeri berhasil diambil',
+        'data' => $galeri
+    ]);
+}
 
-
-    public function create()
-    {
-        //
-    }
-
-
+    // 🔥 STORE GALERI
     public function store(Request $request)
     {
         $request->validate([
             'judul' => 'required|string|max:255',
-            'keterangan' => 'required|string|max:100',
+            'keterangan' => 'nullable|string|max:255',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
+        // 🔥 ambil file
         $file = $request->file('gambar');
         $namaFile = Str::slug($request->judul) . '-' . time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('uploads/galeri'), $namaFile);
 
-        $keygaleri = $request->keygaleri ?? 'banner';
+        // 🔥 pastikan folder ada
+        $path = public_path('uploads/galeri');
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
 
-        Galeri::create([
+        $file->move($path, $namaFile);
+
+        $data = Galeri::create([
             'judul' => $request->judul,
             'keterangan' => $request->keterangan,
             'gambar' => $namaFile,
-            'keygaleri' => $keygaleri
+            'keygaleri' => $request->keygaleri ?? 'banner'
         ]);
 
+        // 🔥 kalau API
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Galeri berhasil ditambahkan',
+                'data' => $data
+            ]);
+        }
+
+        // 🔥 kalau web
         return redirect()->back()->with('success', 'Galeri berhasil ditambahkan.');
     }
 
-
-    public function show(string $id)
-    {
-        //
-    }
-
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-
+    // 🔥 UPDATE
     public function update(Request $request, $id)
     {
         $galeri = Galeri::findOrFail($id);
 
         $request->validate([
             'judul' => 'required|string|max:255',
-            'keterangan' => 'required|string|max:255',
+            'keterangan' => 'nullable|string|max:255',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
@@ -79,32 +75,49 @@ class GaleriController extends Controller
         $galeri->keterangan = $request->keterangan;
 
         if ($request->hasFile('gambar')) {
-            if ($galeri->gambar && file_exists(public_path('uploads/galeri/' . $galeri->gambar))) {
-                unlink(public_path('uploads/galeri/' . $galeri->gambar));
+            $path = public_path('uploads/galeri/');
+
+            // hapus lama
+            if ($galeri->gambar && file_exists($path . $galeri->gambar)) {
+                unlink($path . $galeri->gambar);
             }
 
             $file = $request->file('gambar');
             $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/galeri'), $filename);
+            $file->move($path, $filename);
+
             $galeri->gambar = $filename;
         }
 
         $galeri->save();
 
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Galeri berhasil diupdate',
+                'data' => $galeri
+            ]);
+        }
+
         return redirect()->back()->with('success', 'Galeri berhasil diperbarui.');
     }
 
-
-    public function destroy(string $id)
+    // 🔥 DELETE
+    public function destroy(Request $request, $id)
     {
         $galeri = Galeri::findOrFail($id);
 
-        $gambarPath = public_path('uploads/galeri/' . $galeri->gambar);
-        if ($galeri->gambar && file_exists($gambarPath)) {
-            unlink($gambarPath);
+        $path = public_path('uploads/galeri/');
+        if ($galeri->gambar && file_exists($path . $galeri->gambar)) {
+            unlink($path . $galeri->gambar);
         }
 
         $galeri->delete();
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => 'Galeri berhasil dihapus'
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Galeri berhasil dihapus.');
     }

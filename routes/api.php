@@ -55,8 +55,12 @@ Route::get('/AdminLapangan/dashboard', [DashboardController::class, 'index']);
 // =======================
 // ✅ GALERY
 // =======================
-Route::get('/AdminLapangan/galeri', [GaleriController::class, 'index']);
-Route::post('/AdminLapangan/galeri', [GaleriController::class, 'store']);
+Route::get('/admin/galeri', [GaleriController::class, 'index']);
+Route::post('/admin/galeri', [GaleriController::class, 'store']);
+Route::post('/admin/galeri/update/{id}', [GaleriController::class, 'update']);
+Route::put('/admin/galeri/{id}', [GaleriController::class, 'update']);
+Route::delete('/admin/galeri/{id}', [GaleriController::class, 'destroy']);
+
 
 // API laporan konservasi
 Route::get('/laporan', [LaporanKonservasiController::class, 'index']);

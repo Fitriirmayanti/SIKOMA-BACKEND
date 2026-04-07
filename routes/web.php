@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
+//use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminLapangan\DashboardController;
 use App\Http\Controllers\AdminLapangan\LaporanKonservasiController;
 
@@ -12,7 +12,9 @@ use App\Http\Controllers\AdminLapangan\LaporanKonservasiController;
 */
 
 Route::get('/', function () {
-    return "API SIKOMA BERJALAN";
+    return response()->json([
+        'message' => 'Root OK'
+    ]);
 });
 
 /*
@@ -46,11 +48,11 @@ Route::middleware(['auth'])->prefix('AdminLapangan')->group(function () {
 | Profile Routes (Breeze)
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+//Route::middleware('auth')->group(function () {
+    //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    //Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+   // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+//});
 
 /*
 |--------------------------------------------------------------------------
