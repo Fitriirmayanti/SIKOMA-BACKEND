@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
     'message' => 'Login berhasil',
     'user' => $user,
     'role' => $user->role,
-    'redirect' => $user->role == 'admin_pusat'
+    'redirect' => $user->role == 'AdminLapangan_pusat'
         ? '/dashboard-pusat'
         : '/dashboard-lapangan'
     ]);

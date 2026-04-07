@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\EdukasiController;
 use App\Http\Controllers\AdminLapangan\LaporanKonservasiController;
 use App\Http\Controllers\AdminLapangan\DashboardController;
+use App\Http\Controllers\AdminPusat\GaleriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ Route::post('/register', function (Request $request) {
         'name' => $request->full_name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'role' => 'admin_lapangan' // default role
+        'role' => 'AdminLapangan_lapangan' // default role
     ]);
 
     return response()->json([
@@ -49,7 +50,13 @@ Route::get('/edukasi', [EdukasiController::class, 'index']);
 // =======================
 // ✅ DASHBOARD
 // =======================
-Route::get('/admin/dashboard', [DashboardController::class, 'index']);
+Route::get('/AdminLapangan/dashboard', [DashboardController::class, 'index']);
+
+// =======================
+// ✅ GALERY
+// =======================
+Route::get('/AdminLapangan/galeri', [GaleriController::class, 'index']);
+Route::post('/AdminLapangan/galeri', [GaleriController::class, 'store']);
 
 // API laporan konservasi
 Route::get('/laporan', [LaporanKonservasiController::class, 'index']);

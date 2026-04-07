@@ -9,8 +9,8 @@ return [
         'logout',
         'register',
         'password/*',
-        'admin',
-        'admin/*',
+        'AdminLapangan',
+        'AdminLapangan/*',
     ],
 
     'allowed_methods' => ['*'],

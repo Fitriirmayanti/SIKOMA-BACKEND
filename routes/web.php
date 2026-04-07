@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\LaporanKonservasiController;
+use App\Http\Controllers\AdminLapangan\DashboardController;
+use App\Http\Controllers\AdminLapangan\LaporanKonservasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,19 +26,19 @@ Route::get('/dashboard', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Admin Routes (BACKEND - PUNYA KAMU)
+| AdminLapangan Routes (BACKEND - PUNYA KAMU)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth'])->prefix('AdminLapangan')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
+        ->name('AdminLapangan.dashboard');
 
     Route::get('/laporan-konservasi', [LaporanKonservasiController::class, 'index'])
-        ->name('admin.laporan.index');
+        ->name('AdminLapangan.laporan.index');
 
     Route::post('/laporan-konservasi', [LaporanKonservasiController::class, 'store'])
-        ->name('admin.laporan.store');
+        ->name('AdminLapangan.laporan.store');
 });
 
 /*
