@@ -23,19 +23,17 @@ class AuthenticatedSessionController extends Controller
 
     $user = \App\Models\User::where('email', $request->email)->first();
 
-    if (!$user || !\Hash::check($request->password, $user->password)) {
-        return response()->json([
-            'message' => 'Email atau password salah'
-        ], 401);
+    if ($user->role === 'admin_pusat') {
+        $redirect = '/dashboard-pusat';
+    } else {
+        $redirect = '/dashboard-lapangan';
     }
 
     return response()->json([
-    'message' => 'Login berhasil',
-    'user' => $user,
-    'role' => $user->role,
-    'redirect' => $user->role == 'AdminLapangan_pusat'
-        ? '/dashboard-pusat'
-        : '/dashboard-lapangan'
+        'message' => 'Login berhasil',
+        'user' => $user,
+        'role' => $user->role,
+        'redirect' => $redirect
     ]);
     }
 }

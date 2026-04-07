@@ -13,22 +13,33 @@ class DashboardController extends Controller
         // 🔥 TOTAL LAPORAN
         $total = LaporanKonservasi::count();
 
-        // 🔥 DISETUJUI
-        $laporanDisetujui = LaporanKonservasi::where('status', 1)->count();
-
-        // 🔥 DITOLAK
-        $laporanDitolak = LaporanKonservasi::where('status', 2)->count();
-
-        // 🔥 PER DAERAH
-        $laporanPerDaerah = LaporanKonservasi::select('daerahLokasi', DB::raw('COUNT(*) as total'))
-            ->groupBy('daerahLokasi')
+        // 🔥 DATA PER BULAN (untuk chart)
+        $chart = LaporanKonservasi::select(
+                DB::raw('MONTH(tanggalMulai) as bulan'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->groupBy('bulan')
+            ->orderBy('bulan')
             ->get();
+
+        // 🔥 FORMAT BULAN (BIAR BAGUS DI FRONTEND)
+        $bulanMap = [
+            1 => 'Jan', 2 => 'Feb', 3 => 'Mar',
+            4 => 'Apr', 5 => 'Mei', 6 => 'Jun',
+            7 => 'Jul', 8 => 'Agu', 9 => 'Sep',
+            10 => 'Okt', 11 => 'Nov', 12 => 'Des'
+        ];
+
+        $chartFormatted = $chart->map(function ($item) use ($bulanMap) {
+            return [
+                'bulan' => $bulanMap[$item->bulan] ?? 'Unknown',
+                'total' => $item->total
+            ];
+        });
 
         return response()->json([
             'total_laporan' => $total,
-            'disetujui' => $laporanDisetujui,
-            'ditolak' => $laporanDitolak,
-            'per_daerah' => $laporanPerDaerah
+            'chart' => $chartFormatted
         ]);
     }
 }
