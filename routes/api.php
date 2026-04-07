@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\EdukasiController;
 use App\Http\Controllers\AdminLapangan\LaporanKonservasiController;
-use App\Http\Controllers\AdminLapangan\DashboardController;
 use App\Http\Controllers\AdminPusat\GaleriController;
+use App\Http\Controllers\AdminLapangan\DashboardController as DashboardLapangan;
+use App\Http\Controllers\AdminPusat\DashboardController as DashboardPusat;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,8 @@ Route::get('/edukasi', [EdukasiController::class, 'index']);
 // =======================
 // ✅ DASHBOARD
 // =======================
-Route::get('/AdminLapangan/dashboard', [DashboardController::class, 'index']);
+Route::get('/admin/dashboard', [DashboardPusat::class, 'index']);
+Route::get('/lapangan/dashboard', [DashboardLapangan::class, 'index']);
 
 // =======================
 // ✅ GALERY
