@@ -10,13 +10,14 @@ use App\Http\Controllers\AdminLapangan\LaporanKonservasiController;
 use App\Http\Controllers\AdminPusat\GaleriController;
 use App\Http\Controllers\AdminLapangan\DashboardController as DashboardLapangan;
 use App\Http\Controllers\AdminPusat\DashboardController as DashboardPusat;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('/home', [HomeController::class, 'apiHome']);
 // =======================
 // ✅ REGISTER
 // =======================

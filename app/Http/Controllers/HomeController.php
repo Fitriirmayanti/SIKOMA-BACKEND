@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Edukasi;
+use App\Models\Galeri;
+use App\Models\Website;
 
 class HomeController extends Controller
 {
@@ -106,5 +108,24 @@ class HomeController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Pesan anda telah terkirim.');
+    }
+    public function apiHome()
+{
+    $banner = \App\Models\Galeri::where('keygaleri', 'banner')->get();
+
+    $edukasi = \App\Models\Edukasi::where('kategori', 'Program')
+        ->orderBy('id', 'desc')
+        ->take(4)
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => [
+            'banner' => $banner,
+            'edukasi' => $edukasi
+        ]
+    ]);
+
+
     }
 }
